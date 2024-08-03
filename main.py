@@ -33,7 +33,8 @@ def blocks(file, size=(2 ** 16)):
 #collect
 pool = []
 
-for (root, dirs, namesRaw) in os.walk(args.path, topdown=True):
+path = os.path.abspath(args.path)
+for (root, dirs, namesRaw) in os.walk(path, topdown=True):
     
     #skip hidden
     if not args.hidden and "." in root:
