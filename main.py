@@ -19,6 +19,11 @@ parser.add_argument('-t', '--type', help="filter file types", required=False, de
 parser.add_argument('-v', '--verbose', action="store_true")
 parser.add_argument('-d', '--hidden' , action="store_true", help="include hidden directories in scan")
 
+listingTypeFlags = parser.add_mutually_exclusive_group()
+
+listingTypeFlags.add_argument('-a', '--abs', action="store_true", help="show absolute of file when listing")
+listingTypeFlags.add_argument('-r', '--rel', action="store_true", help="show relative of file when listing")
+
 args = parser.parse_args()
 
 
@@ -66,7 +71,12 @@ for file in pool:
             total += count
             
             if not args.nolist:
-                print(f"{count: <10} {name}")
+                
+                if   args.abs: listing = file
+                elif args.rel: listing = os.path.relpath(file, path)
+                else         : listing = name
+                
+                print(f"{count: <10} {listing}")
     
     except UnicodeDecodeError:
         if args.verbose:
