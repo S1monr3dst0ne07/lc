@@ -45,7 +45,7 @@ path = os.path.abspath(args.path)
 for (root, dirs, namesRaw) in os.walk(path, topdown=True):
     
     #skip hidden
-    if not args.hidden and "." in root:
+    if not args.hidden and "\." in root:
         continue
     
     #filter files by type
@@ -62,7 +62,6 @@ for (root, dirs, namesRaw) in os.walk(path, topdown=True):
     files = [os.path.abspath(f'{root}/{x}') for x in namesFiltered]
     pool += files
     
-
 @dataclasses.dataclass
 class cEntry:
     count : int
